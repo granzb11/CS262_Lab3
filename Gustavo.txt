@@ -1,0 +1,366 @@
+Script started on Wed Sep 17 11:42:40 2014
+mason% uname -a
+SunOS mason 5.10 Generic_150400-13 sun4u sparc SUNW,Sun-Fire-V890
+mason% cat Makefile
+GCC=gcc
+SortArray: SortArray.o
+        ${GCC} SortArray.o -o SortArray
+
+        rm -f *.o
+mason% C cat SortArray.c
+#include <stdio.h>
+#include <stdlib.h>
+
+
+
+
+#define LOOPTIME 5
+#define ARRAYLEN 25
+#define RNG_SEED 3074
+
+
+void InitializeArray(double *numArray, const int length); 
+int InsertionSort(double *numArray, const int length); 
+
+
+void main(void)
+{
+     int i;
+        int j;
+        int counter;
+     double numArray[ARRAYLEN];
+srand(RNG_SEED);
+
+     for(i=0; i<LOOPTIME; i++)
+        {
+        InitializeArray(numArray, ARRAYLEN);
+        counter=InsertionSort(numArray, ARRAYLEN);
+       
+         
+        printf("\nThis is the SORTED list: \n");
+        for(j=0; j<ARRAYLEN; j++)
+        {
+        printf("%.4f\n ", numArray[j]);
+        }
+        printf("\nThe number of swaps for this list was: %d,\n", counter);
+        }
+}
+
+void InitializeArray(double *numArray, const int length)
+{
+        int j;
+        printf("\nThis is the original UNSORTED list: \n");
+        for(j=0; j<ARRAYLEN; j++)
+        {
+                numArray[j] = rand()/(RAND_MAX/1000.0);
+                printf("%.4f\n ", numArray[j]);
+        }
+}
+
+int InsertionSort(double *numArray, const int length)
+{
+int i, j;
+double key;
+int counter =0;  
+for(j=1 ; j<=ARRAYLEN-1; j++) 
+{
+i= j;
+while(i>0 && numArray[i]<numArray[i-1])
+{
+key=numArray[i];
+numArray[i]= numArray[i-1];
+numArray[i-1]=key;
+i--;
+counter++;
+}
+}
+return counter;
+}
+
+mason% make
+cc   -c  SortArray.c
+gcc SortArray.o -o SortArray
+rm -f *.o
+mason% ./SortArray
+
+This is the original UNSORTED list: 
+618.9459
+ 940.3974
+ 100.3449
+ 3.1129
+ 908.7191
+ 484.1151
+ 913.9683
+ 650.8683
+ 62.5935
+ 652.3942
+ 43.0006
+ 752.6170
+ 423.7800
+ 273.5679
+ 516.2206
+ 203.8331
+ 162.0838
+ 104.1902
+ 522.6295
+ 105.4415
+ 612.7506
+ 814.6916
+ 667.5314
+ 201.6663
+ 316.4464
+ 
+This is the SORTED list: 
+3.1129
+ 43.0006
+ 62.5935
+ 100.3449
+ 104.1902
+ 105.4415
+ 162.0838
+ 201.6663
+ 203.8331
+ 273.5679
+ 316.4464
+ 423.7800
+ 484.1151
+ 516.2206
+ 522.6295
+ 612.7506
+ 618.9459
+ 650.8683
+ 652.3942
+ 667.5314
+ 752.6170
+ 814.6916
+ 908.7191
+ 913.9683
+ 940.3974
+ 
+The number of swaps for this list was: 161,
+
+This is the original UNSORTED list: 
+402.8748
+ 851.0086
+ 230.0485
+ 479.0490
+ 378.8568
+ 238.6547
+ 277.2607
+ 70.1010
+ 565.1723
+ 292.7641
+ 734.6110
+ 278.9087
+ 855.9832
+ 332.6518
+ 946.7452
+ 546.4949
+ 778.9850
+ 593.0967
+ 147.5875
+ 892.6359
+ 203.6805
+ 249.7330
+ 777.2759
+ 756.5844
+ 40.1929
+ 
+This is the SORTED list: 
+40.1929
+ 70.1010
+ 147.5875
+ 203.6805
+ 230.0485
+ 238.6547
+ 249.7330
+ 277.2607
+ 278.9087
+ 292.7641
+ 332.6518
+ 378.8568
+ 402.8748
+ 479.0490
+ 546.4949
+ 565.1723
+ 593.0967
+ 734.6110
+ 756.5844
+ 777.2759
+ 778.9850
+ 851.0086
+ 855.9832
+ 892.6359
+ 946.7452
+ 
+The number of swaps for this list was: 142,
+
+This is the original UNSORTED list: 
+379.7418
+ 773.2780
+ 70.2536
+ 271.6453
+ 327.0363
+ 930.2957
+ 782.5251
+ 164.5253
+ 440.4736
+ 922.0862
+ 553.1785
+ 0.6104
+ 653.6454
+ 79.1650
+ 836.2072
+ 173.9250
+ 875.5150
+ 516.1901
+ 69.7653
+ 996.8566
+ 660.1764
+ 702.4751
+ 192.9075
+ 58.6261
+ 124.7291
+ 
+This is the SORTED list: 
+0.6104
+ 58.6261
+ 69.7653
+ 70.2536
+ 79.1650
+ 124.7291
+ 164.5253
+ 173.9250
+ 192.9075
+ 271.6453
+ 327.0363
+ 379.7418
+ 440.4736
+ 516.1901
+ 553.1785
+ 653.6454
+ 660.1764
+ 702.4751
+ 773.2780
+ 782.5251
+ 836.2072
+ 875.5150
+ 922.0862
+ 930.2957
+ 996.8566
+ 
+The number of swaps for this list was: 158,
+
+This is the original UNSORTED list: 
+69.9179
+ 206.7629
+ 481.1243
+ 583.9106
+ 751.7014
+ 999.8779
+ 913.7242
+ 870.1743
+ 45.2589
+ 155.3087
+ 613.1779
+ 808.3743
+ 694.3266
+ 959.8071
+ 450.6973
+ 813.1352
+ 582.2321
+ 331.9193
+ 190.7102
+ 78.3105
+ 931.8522
+ 889.6146
+ 884.6095
+ 326.7922
+ 604.4801
+ 
+This is the SORTED list: 
+45.2589
+ 69.9179
+ 78.3105
+ 155.3087
+ 190.7102
+ 206.7629
+ 326.7922
+ 331.9193
+ 450.6973
+ 481.1243
+ 582.2321
+ 583.9106
+ 604.4801
+ 613.1779
+ 694.3266
+ 751.7014
+ 808.3743
+ 813.1352
+ 870.1743
+ 884.6095
+ 889.6146
+ 913.7242
+ 931.8522
+ 959.8071
+ 999.8779
+ 
+The number of swaps for this list was: 140,
+
+This is the original UNSORTED list: 
+874.7215
+ 723.7770
+ 589.6481
+ 592.6695
+ 153.9354
+ 195.2879
+ 983.3979
+ 299.6612
+ 14.4658
+ 883.9076
+ 954.0391
+ 700.0641
+ 973.7236
+ 764.4581
+ 956.5722
+ 974.9443
+ 320.7495
+ 328.2571
+ 38.9111
+ 715.2318
+ 609.7903
+ 387.1883
+ 298.7762
+ 287.4538
+ 822.8401
+ 
+This is the SORTED list: 
+14.4658
+ 38.9111
+ 153.9354
+ 195.2879
+ 287.4538
+ 298.7762
+ 299.6612
+ 320.7495
+ 328.2571
+ 387.1883
+ 589.6481
+ 592.6695
+ 609.7903
+ 700.0641
+ 715.2318
+ 723.7770
+ 764.4581
+ 822.8401
+ 874.7215
+ 883.9076
+ 954.0391
+ 956.5722
+ 973.7236
+ 974.9443
+ 983.3979
+ 
+The number of swaps for this list was: 161,
+mason% ^D
+script done on Wed Sep 17 11:43:41 2014
